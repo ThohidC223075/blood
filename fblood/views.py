@@ -24,6 +24,21 @@ from django.utils import timezone
 from .models import OTP
 #otp end
 
+def delete_expired_accounts():
+    # Get the current time
+    now = timezone.now()
+    
+    # Get all OTP records where the OTP is older than 3 minutes
+    expired_otps = OTP.objects.filter(created_at__lt=now - timedelta(minutes=6))
+    
+    for otp in expired_otps:
+        # Delete the associated user and the OTP record
+       # otp.user.delete()
+        otp.delete()
+
+
+
+
 
 
 
@@ -71,6 +86,7 @@ def signup(request):
     
     
 def Login(request):
+    delete_expired_accounts()
     if request.method == "POST":
         
         #start storing the user input in variable for login
