@@ -256,6 +256,17 @@
         </div>
     </section>
     <!-- Script For Navbar Toggle menue of nabvar -->
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == "success" %}
+     <script>
+        alert("Submitted successfully. Thanks for your feedback.");
+    </script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    
      {% if val == 0 %}
      <script>
         var phoneNumber = localStorage.getItem('phoneNumber');
