@@ -374,7 +374,7 @@ def feedback(request):
         if(len( feedback_message)>0):
             feedback_info=Feedback(phone=feedback_hidden_phone,feedback=feedback_message)
             feedback_info.save()
-            messages.success(request,"")
+            messages.success(request,"h")
             return redirect('home')
         else:
             return redirect('home')
