@@ -183,7 +183,8 @@ def find(request):
         count=0
         
         #initializes an empty list
-        temp = []
+        temp_for_district_police_match = []
+        temp_for_district_match = []
         
         #fetching the Donar_donate_info data
         fetch=Donar_donate_info.objects.all()
@@ -207,14 +208,25 @@ def find(request):
                 obj.blood=info.blood
                 obj.address=address
                 obj.img=info.img
-                temp.append(obj)
+                temp_for_district_police_match.append(obj)
+            elif(info.blood == find_blood and days>=121 and info.district == find_district and info.police !=find_police):
+                count+=1
+                address= info.police + ", " + info.district
+                obj=FindInfo()
+                obj.name=info.name
+                obj.phone=info.phone
+                obj.blood=info.blood
+                obj.address=address
+                obj.img=info.img
+                temp_for_district_match.append(obj)
                 
         if(count==0):
                 messages.error(request,"Sorry! There aren't any donors available in your criteria.")
                 return redirect('find')
         else:
+            temp_for_district_police_match.extend(temp_for_district_match)#combining the list
             messages.success(request,"Find succesfully")
-            return render(request,'find.html',{"fabs":temp})
+            return render(request,'find.html',{"fabs":temp_for_district_police_match})
         
     else:
         return render(request,'find.html')
@@ -374,6 +386,7 @@ def feedback(request):
         if(len( feedback_message)>0):
             feedback_info=Feedback(phone=feedback_hidden_phone,feedback=feedback_message)
             feedback_info.save()
+            messages.success(request,"")
             return redirect('home')
         else:
             return redirect('home')

@@ -264,6 +264,16 @@
         document.getElementById('hidden_phone2').value = phoneNumber;
      </script>
      {% endif %}
+
+     {% if messages %}
+     {% for message in messages %}
+     {% if message.tags == "success" %}
+     <script>
+        alert("Submitted successfully. Thanks for your feedback.");
+    </script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
      
     <script src="{% static 'js\phone.js' %}"></script>
     <script>
