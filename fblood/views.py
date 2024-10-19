@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,HttpResponse
 
-from  .models import signup_info,Donar_donate_info,FindInfo,PreviousInfo,ProfileInfo,Feedback
+from  .models import signup_info,Donar_donate_info,FindInfo,PreviousInfo,ProfileInfo,Feedback,BloodGroup,Districts_list
 from datetime import datetime, timedelta
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -167,7 +167,9 @@ def donate(request):
                 return redirect('donate')
 
     else:
-         return render(request,'donate.html')
+         fetch_for_blood_group=BloodGroup.objects.all()
+         fetch_for_district=Districts_list.objects.all()
+         return render(request,'donate.html',{"bloodgroup":fetch_for_blood_group,"district":fetch_for_district})
 
 @login_required(login_url='Login')      
 def find(request):
@@ -224,12 +226,16 @@ def find(request):
                 messages.error(request,"Sorry! There aren't any donors available in your criteria.")
                 return redirect('find')
         else:
-            temp_for_district_police_match.extend(temp_for_district_match)#combining the list
+            temp_for_district_police_match.extend(temp_for_district_match)#combining the list of all police station of a district
+            fetch_for_blood_group=BloodGroup.objects.all()
+            fetch_for_district=Districts_list.objects.all()
             messages.success(request,"Find succesfully")
-            return render(request,'find.html',{"fabs":temp_for_district_police_match})
+            return render(request,'find.html',{"fabs":temp_for_district_police_match,"bloodgroup":fetch_for_blood_group,"district":fetch_for_district})
         
     else:
-        return render(request,'find.html')
+         fetch_for_blood_group=BloodGroup.objects.all()
+         fetch_for_district=Districts_list.objects.all()
+         return render(request,'find.html',{"bloodgroup":fetch_for_blood_group,"district":fetch_for_district})
     
     
 @login_required(login_url='Login')
@@ -372,8 +378,9 @@ def update(request):
             
             
             
-    else:      
-        return render(request,'update.html')
+    else:
+        fetch_for_district=Districts_list.objects.all()      
+        return render(request,'update.html',{"district":fetch_for_district})
     
 
 

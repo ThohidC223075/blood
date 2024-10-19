@@ -46,6 +46,12 @@ class Feedback(models.Model):
     phone=models.CharField(max_length=11)
     feedback=models.CharField(max_length=300)
     
+
+class BloodGroup(models.Model):
+    blood_group=models.CharField(max_length=4)
+class Districts_list(models.Model):
+    district=models.CharField(max_length=30)
+    
 #models for otp(start here)
 class OTP(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
