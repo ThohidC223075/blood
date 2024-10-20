@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+Sitemap: https://aldom.org/sitemap.xml
+Sitemap: https://aldom.org/signup/sitemap.xml
