@@ -18,23 +18,16 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.http import HttpResponse
+
 #extra for deploying
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-def robots_txt(request):
-    content = (
-        "User-agent: *\n"
-        "Disallow:\n"
-        "Sitemap: https://aldom.org/sitemap.xml\n"
-        "Sitemap: https://aldom.org/signup/sitemap.xml\n"
-    )
-    return HttpResponse(content, content_type="text/plain")
+
 
 urlpatterns = [
     path('',include('fblood.urls')),
     path('admin/', admin.site.urls),
-    path("robots.txt", robots_txt),
+
 ]
 urlpatterns=urlpatterns+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 #extra for deploying
